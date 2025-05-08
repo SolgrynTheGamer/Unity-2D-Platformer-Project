@@ -1,4 +1,0 @@
-repository "Unity 2D Example/Unity 2D Example@14568925769374@cloud"
-  path "/"
-    br "/main"
-    co "/main"
