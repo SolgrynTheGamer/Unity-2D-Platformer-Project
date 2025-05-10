@@ -6163,8 +6163,8 @@ GameObject:
   - component: {fileID: 1829013162}
   - component: {fileID: 1829013165}
   - component: {fileID: 1829013166}
-  - component: {fileID: 1829013167}
   - component: {fileID: 1829013168}
+  - component: {fileID: 1829013169}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -6216,7 +6216,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -6447722072507503168, guid: 10f3cacccb0c4c547be76836eba20664, type: 3}
+  m_Sprite: {fileID: -1725898018, guid: b011d091d38ab2f499a1a067bd29d471, type: 3}
   m_Color: {r: 0.89433956, g: 0.89433956, b: 0.89433956, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6236,8 +6236,8 @@ Transform:
   m_GameObject: {fileID: 1829013159}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.45, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -6.96, y: 1.69, z: 0}
+  m_LocalScale: {x: 1, y: 1.0158, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 519420032}
@@ -6326,31 +6326,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.6, y: 0.9}
+  m_Offset: {x: 0, y: 0.57}
+  m_Size: {x: 1, y: 1.14}
   m_Direction: 0
---- !u!95 &1829013167
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829013159}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0eef85e14627d85449a6487988f1d751, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!82 &1829013168
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6372,7 +6350,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 1.1628485
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -6448,6 +6426,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1829013169
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829013159}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9ac4b0c199a62ae458693d197c216f44, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1860107190
 GameObject:
   m_ObjectHideFlags: 0
