@@ -7,6 +7,7 @@ public class EnemyMove : MonoBehaviour
     SpriteRenderer spriteRenderer;
     CapsuleCollider2D capsuleCollider2D;
     public int nextMove;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -15,10 +16,11 @@ public class EnemyMove : MonoBehaviour
         capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         Invoke("Think", 5);
     }
+
     void FixedUpdate()
     {
-        rigid.linearVelocity = new Vector2(nextMove, rigid.linearVelocityY);
-        
+        rigid.linearVelocity = new Vector2(nextMove, rigid.linearVelocity.y);
+
         Vector2 frontVec = new Vector2(rigid.position.x + nextMove * 0.5f, rigid.position.y);
         Debug.DrawRay(frontVec, Vector3.down, Color.yellow);
         RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("Platform"));
@@ -27,10 +29,10 @@ public class EnemyMove : MonoBehaviour
             Turn();
         }
     }
+
     void Think()
     {
         nextMove = Random.Range(-1, 2);
-        float nextThinkTIme = Random.Range(2f, 5f);
         anim.SetInteger("WalkSpeed", nextMove);
 
         if (nextMove != 0)
@@ -38,17 +40,24 @@ public class EnemyMove : MonoBehaviour
             spriteRenderer.flipX = nextMove == 1;
         }
 
-        Invoke("Think", 5);
+        Invoke("Think", Random.Range(2f, 5f));
     }
 
     void Turn()
     {
-        nextMove *= -1;
-        spriteRenderer.flipX = nextMove == 1;
+        // ??? ???? ??
+        nextMove = Random.Range(-1, 2);
+        anim.SetInteger("WalkSpeed", nextMove);
+
+        if (nextMove != 0)
+        {
+            spriteRenderer.flipX = nextMove == 1;
+        }
 
         CancelInvoke();
-        Invoke("Think", 5);
+        Invoke("Think", Random.Range(2f, 5f));
     }
+
     public void OnDamaged()
     {
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);
@@ -57,6 +66,7 @@ public class EnemyMove : MonoBehaviour
         rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
         Invoke("Deactivate", 5);
     }
+
     void Deactivate()
     {
         gameObject.SetActive(false);
