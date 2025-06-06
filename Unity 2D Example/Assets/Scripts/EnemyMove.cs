@@ -1,33 +1,44 @@
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class EnemyMove : MonoBehaviour
 {
     Rigidbody2D rigid;
     Animator anim;
-    SpriteRenderer spriteRenderer;
-    CapsuleCollider2D capsuleCollider2D;
-    public int nextMove;
+    SpriteRenderer spr;
+    CapsuleCollider2D cap;
+
+    int nextMove;
+    int hp;
+    public int maxHp = 100;
+
+    bool isInvincible;
+    public float invincibleDur = 0.5f;
+
+    bool isKnockback;
+    public float knockbackForce = 3f;
+    public float knockbackDur = 0.2f;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
-        Invoke("Think", 5);
+        spr = GetComponent<SpriteRenderer>();
+        cap = GetComponent<CapsuleCollider2D>();
+
+        hp = maxHp;
+        Invoke(nameof(Think), 5f);
     }
 
     void FixedUpdate()
     {
+        if (isKnockback) return;
+
         rigid.linearVelocity = new Vector2(nextMove, rigid.linearVelocity.y);
 
-        Vector2 frontVec = new Vector2(rigid.position.x + nextMove * 0.5f, rigid.position.y);
-        Debug.DrawRay(frontVec, Vector3.down, Color.yellow);
-        RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("Platform"));
-        if (rayHit.collider == null)
-        {
-            Turn();
-        }
+        Vector2 front = new Vector2(rigid.position.x + nextMove * 0.5f, rigid.position.y);
+        RaycastHit2D hit = Physics2D.Raycast(front, Vector3.down, 1f, LayerMask.GetMask("Platform"));
+        if (hit.collider == null) Turn();
     }
 
     void Think()
@@ -35,36 +46,57 @@ public class EnemyMove : MonoBehaviour
         nextMove = Random.Range(-1, 2);
         anim.SetInteger("WalkSpeed", nextMove);
 
-        if (nextMove != 0)
-        {
-            spriteRenderer.flipX = nextMove == 1;
-        }
-
-        Invoke("Think", Random.Range(2f, 5f));
+        if (nextMove != 0) spr.flipX = nextMove == 1;
+        Invoke(nameof(Think), Random.Range(2f, 5f));
     }
 
     void Turn()
     {
-        // ??? ???? ??
         nextMove = Random.Range(-1, 2);
         anim.SetInteger("WalkSpeed", nextMove);
-
-        if (nextMove != 0)
-        {
-            spriteRenderer.flipX = nextMove == 1;
-        }
+        if (nextMove != 0) spr.flipX = nextMove == 1;
 
         CancelInvoke();
-        Invoke("Think", Random.Range(2f, 5f));
+        Invoke(nameof(Think), Random.Range(2f, 5f));
     }
 
-    public void OnDamaged()
+    public void OnDamaged(int dmg, Vector2 attackerPos)
     {
-        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-        spriteRenderer.flipY = true;
-        capsuleCollider2D.enabled = false;
+        if (isInvincible) return;
+
+        hp -= dmg;
+        StartCoroutine(Invincible());
+
+        Vector2 dir = (transform.position.x - attackerPos.x > 0) ? Vector2.right : Vector2.left;
+        StartCoroutine(Knockback(dir));
+
+        if (hp <= 0) Die();
+    }
+
+    IEnumerator Invincible()
+    {
+        isInvincible = true;
+        spr.color = new Color(1, 1, 1, 0.4f);
+        yield return new WaitForSeconds(invincibleDur);
+        spr.color = Color.white;
+        isInvincible = false;
+    }
+
+    IEnumerator Knockback(Vector2 dir)
+    {
+        isKnockback = true;
+        rigid.linearVelocity = Vector2.zero;
+        rigid.AddForce((dir + Vector2.up) * knockbackForce, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(knockbackDur);
+        isKnockback = false;
+    }
+
+    void Die()
+    {
+        spr.flipY = true;
+        cap.enabled = false;
         rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
-        Invoke("Deactivate", 5);
+        Invoke(nameof(Deactivate), 5f);
     }
 
     void Deactivate()
