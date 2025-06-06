@@ -158,14 +158,14 @@ public class PlayerMove : MonoBehaviour
         manager.stagePoint += 100;
         rigid.AddForce(Vector2.up * 8, ForceMode2D.Impulse);
         EnemyMove enemyMove = enemy.GetComponent<EnemyMove>();
-<<<<<<< Updated upstream
-        enemyMove.OnDamaged();
-=======
+
+        enemyMove.OnDamaged(20, transform.position);
+
         if (enemyMove != null)
         {
             enemyMove.OnDamaged(20, transform.position);
         }
->>>>>>> Stashed changes
+
     }
 
     void OnDamaged(Vector2 targetPos)
