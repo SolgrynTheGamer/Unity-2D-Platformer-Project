@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Scene
   m_RootView: {fileID: 7}
   m_MinSize: {x: 875, y: 332}
   m_MaxSize: {x: 10000, y: 10000}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 28
+  controlID: 61
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 106
+  controlID: 110
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -727,7 +727,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Scenes
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -737,17 +737,17 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 68
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scenes
   m_LastFoldersGridSize: 68
   m_LastProjectPath: C:\Users\JYP\Desktop\2D Platformer Project\Unity-2D-Platformer-Project\Unity
     2D Example
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 60}
-    m_SelectedIDs: 1ec30000
-    m_LastClickedID: 49950
-    m_ExpandedIDs: 0000000080c2000082c2000084c2000086c2000088c200008ac200008cc200008ec2000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 73.20001}
+    m_SelectedIDs: 92c30000
+    m_LastClickedID: 50066
+    m_ExpandedIDs: 00000000f6c20000f8c20000fac20000fcc20000fec2000000c3000002c3000004c3000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -776,7 +776,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000080c2000082c2000084c2000086c2000088c200008ac200008cc200008ec20000
+    m_ExpandedIDs: 00000000f6c20000f8c20000fac20000fcc20000fec2000000c3000002c3000004c30000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -804,7 +804,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c623000050ba0000beae0000ecae000042b70000e6b500003ab100003eb10000c2b5000000000000f2be0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -877,7 +877,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 141.59998
+  m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:
@@ -921,10 +921,10 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 194.20001}
-      m_SelectedIDs: 86360100
-      m_LastClickedID: 79494
-      m_ExpandedIDs: f29affff0ec9ffff06cdffffb8d4ffffdadfffff24e5ffffcee5ffff74e6ffff42e8ffff72ecffff1aedffffbceeffffe2efffff8af0ffff8cfaffffdec7000096db00004cf00000840101008c1401003215010086360100003a0100
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: a6baffffb8baffff74c0ffffa8c0ffff2ed2ffff40d2ffff30d8ffff70d8ffffb8e4ffff06ecffff18ecffff12f2ffff06fbffff86240100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1514,9 +1514,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 18.407925, y: 0.40506762, z: 0.027569268}
+    m_Target: {x: 396.63638, y: 185.12344, z: -1.7212934}
     speed: 2
-    m_Value: {x: 18.407925, y: 0.40506762, z: 0.027569268}
+    m_Value: {x: 396.63638, y: 185.12344, z: -1.7212934}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1566,16 +1566,16 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 7.3419747
+    m_Target: 182.22841
     speed: 2
-    m_Value: 7.3419747
+    m_Value: 190.8151
   m_Ortho:
     m_Target: 1
     speed: 2
     m_Value: 1
   m_CameraSettings:
-    m_Speed: 1.2403798
-    m_SpeedNormalized: 0.6199999
+    m_Speed: 0.8805598
+    m_SpeedNormalized: 0.4399999
     m_SpeedMin: 0.001
     m_SpeedMax: 2
     m_EasingEnabled: 1
