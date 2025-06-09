@@ -1,17 +1,19 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // SceneManager.LoadScene이 필요할 경우 추가
+<<<<<<< Updated upstream
+=======
+using UnityEngine.SceneManagement;
+>>>>>>> Stashed changes
 
 public class PlayerMove : MonoBehaviour
 {
     public float maxSpeed;
     public float jumpPower;
     public float jumpCount;
-    public float jumpHeight = 5f;
-    public float moveSpeed = 8f;
-    public bool flippedLeft;
-    public bool facingRight;
-    // public GameManager manager; // 더 이상 HealthDown을 호출하지 않으므로 제거
+<<<<<<< Updated upstream
+    public GameManager manager;
+=======
 
+>>>>>>> Stashed changes
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     CapsuleCollider2D capsuleCollider2D;
@@ -28,12 +30,12 @@ public class PlayerMove : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        capsuleCollider2D = GetComponent<CapsuleCollider2D>(); // 2D 콜라이더
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void PlaySound(string action)
+    void PlaySound(string action)
     {
         switch (action)
         {
@@ -61,77 +63,65 @@ public class PlayerMove : MonoBehaviour
                 audioSource.clip = audioFinish;
                 audioSource.Play();
                 break;
+
         }
     }
 
     private void Update()
     {
-        // 게임이 멈춰있을 때는 (Time.timeScale = 0) 플레이어 조작을 막습니다.
-        if (Time.timeScale == 0) return;
+<<<<<<< Updated upstream
+=======
+        if (Time.timeScale == 0) return; // 게임이 멈춰있을 때는 (Time.timeScale = 0) 플레이어 조작을 막습니다.
 
+>>>>>>> Stashed changes
         if (Input.GetButtonDown("Jump") && jumpCount < 2)
         {
-            rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, 0);
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
             PlaySound("JUMP");
             jumpCount++;
         }
 
-        float h = Input.GetAxisRaw("Horizontal");
-        rigid.linearVelocity = new Vector2(h * moveSpeed, rigid.linearVelocity.y);
+        if (Input.GetButtonUp("Horizontal"))
+        {
+            rigid.linearVelocity = new Vector2(rigid.linearVelocity.normalized.x * 0.0000001f, rigid.linearVelocityY);
+        }
 
-        if (h < 0)
+        if (Input.GetButton("Horizontal"))
         {
-            facingRight = false;
-            Flip(false);
-            anim.SetBool("isWalking", true);
+            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
-        else if (h > 0)
-        {
-            facingRight = true;
-            Flip(true);
-            anim.SetBool("isWalking", true);
-        }
-        else
+        
+        if (rigid.linearVelocity.normalized.x == 0)
         {
             anim.SetBool("isWalking", false);
         }
-    }
-
-    void Flip(bool facingRight)
-    {
-        if(flippedLeft && facingRight)
+        else
         {
-            transform.Rotate(0, -180, 0);
-            flippedLeft = false;
-        }
-        if(!flippedLeft && !facingRight)
-        {
-            transform.Rotate(0, -180, 0);
-            flippedLeft = true;
+            anim.SetBool("isWalking", true);
         }
     }
-
     void FixedUpdate()
     {
-        // 게임이 멈춰있을 때는 (Time.timeScale = 0) 물리 연산도 막습니다.
+<<<<<<< Updated upstream
+=======
         if (Time.timeScale == 0)
         {
             rigid.linearVelocity = Vector2.zero; // 정지
             return;
         }
 
+>>>>>>> Stashed changes
         float h = Input.GetAxisRaw("Horizontal");
 
         rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
 
-        if (rigid.linearVelocity.x > maxSpeed)
-            rigid.linearVelocity = new Vector2(maxSpeed, rigid.linearVelocity.y);
-        else if (rigid.linearVelocity.x < -maxSpeed)
-            rigid.linearVelocity = new Vector2(-maxSpeed, rigid.linearVelocity.y);
+        if (rigid.linearVelocityX > maxSpeed)
+            rigid.linearVelocity = new Vector2(maxSpeed, rigid.linearVelocityY);
+        else if (rigid.linearVelocityX < -maxSpeed)
+            rigid.linearVelocity = new Vector2(-maxSpeed, rigid.linearVelocityY);
 
-        if (rigid.linearVelocity.y < 0)
+        if (rigid.linearVelocityY < 0)
         {
             Debug.DrawRay(rigid.position, Vector3.down, Color.yellow);
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
@@ -142,22 +132,29 @@ public class PlayerMove : MonoBehaviour
                     anim.SetBool("isJumping", false);
                     jumpCount = 0;
                 }
+<<<<<<< Updated upstream
+                    
+=======
+
+>>>>>>> Stashed changes
             }
         }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy")) // "Enemy" 태그를 가진 오브젝트와 충돌 시
+<<<<<<< Updated upstream
+        if (collision.gameObject.tag == "Enemy")
+=======
+        if (collision.gameObject.CompareTag("Enemy"))
+>>>>>>> Stashed changes
         {
-            if (rigid.linearVelocity.y < 0 && transform.position.y > collision.transform.position.y)
+            if (rigid.linearVelocityY < 0 && transform.position.y > collision.transform.position.y)
             {
-                // 적을 밟았을 때
                 OnAttack(collision.transform);
             }
             else
             {
-                // 적에게 부딪혔을 때
                 OnDamaged(collision.transform.position);
             }
         }
@@ -165,91 +162,117 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 아이템 획득 로직
+<<<<<<< Updated upstream
+        if (collision.gameObject.tag == "Item")
+=======
         if (collision.gameObject.CompareTag("Item"))
+>>>>>>> Stashed changes
         {
+            bool isBronze = collision.gameObject.name.Contains("Bronze");
+            bool isSilver = collision.gameObject.name.Contains("Silver");
+            bool isGold = collision.gameObject.name.Contains("Gold");
+
+            if (isBronze) manager.stagePoint += 50;
+            else if (isSilver) manager.stagePoint += 100;
+            else if (isGold) manager.stagePoint += 200;
+
+            collision.gameObject.SetActive(false);
             PlaySound("ITEM");
-            // Item 스크립트에서 Destroy(gameObject)를 호출하므로 여기서 SetActive(false) 필요 없음
-            // collision.gameObject.SetActive(false); // Item 스크립트에서 처리
         }
-        else if (collision.gameObject.CompareTag("Finish"))
+        else if (collision.gameObject.tag == "Finish")
         {
-            // manager.NextStage(); // GameManager로 씬 전환 및 스테이지 관리
+<<<<<<< Updated upstream
+            manager.NextStage();
+            PlaySound("FINISH");
+        }
+=======
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.NextStage();
             }
             PlaySound("FINISH");
         }
-        else if (collision.gameObject.CompareTag("DeadZone")) // 맵 아래로 떨어지는 DeadZone 태그
+        else if (collision.gameObject.CompareTag("DeadZone"))
         {
             if (HealthSystem.Instance != null)
             {
-                HealthSystem.Instance.TakeDamage(); // 체력 1 감소
-                // 플레이어 리스폰 위치 (GameManager에서 관리)
+                HealthSystem.Instance.TakeDamage(); // DeadZone에 닿으면 체력 1 감소
                 if (GameManager.Instance != null)
                 {
-                    GameManager.Instance.PlayerReposition();
+                    GameManager.Instance.PlayerReposition(); // 플레이어 리스폰
                 }
             }
         }
+>>>>>>> Stashed changes
     }
 
     void OnAttack(Transform enemy)
     {
         PlaySound("ATTACK");
-        // manager.stagePoint += 100; // GameManager로 포인트 전달
+<<<<<<< Updated upstream
+        manager.stagePoint += 100;
+=======
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.AddStagePoint(100); // GameManager에 AddStagePoint 함수 추가 필요
+            GameManager.Instance.AddStagePoint(100);
         }
 
+>>>>>>> Stashed changes
         rigid.AddForce(Vector2.up * 8, ForceMode2D.Impulse);
         EnemyMove enemyMove = enemy.GetComponent<EnemyMove>();
-        if (enemyMove != null)
-        {
-            enemyMove.OnDamaged();
-        }
+        enemyMove.OnDamaged();
     }
 
     void OnDamaged(Vector2 targetPos)
     {
-        // 이미 데미지 입는 중이거나 죽었으면 또 데미지 입지 않음
+<<<<<<< Updated upstream
+        PlaySound("DAMAGED");
+        manager.HealthDown();
+        gameObject.layer = 8;
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+=======
         if (gameObject.layer == LayerMask.NameToLayer("PlayerDamaged")) return;
 
         PlaySound("DAMAGED");
 
         if (HealthSystem.Instance != null)
         {
-            HealthSystem.Instance.TakeDamage(); // HealthSystem에 데미지 요청
+            HealthSystem.Instance.TakeDamage();
         }
 
         gameObject.layer = LayerMask.NameToLayer("PlayerDamaged"); // 무적 레이어로 변경 (Layer 8)
         spriteRenderer.color = new Color(1, 1, 1, 0.4f); // 투명하게
+>>>>>>> Stashed changes
 
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
         rigid.AddForce(new Vector2(dirc, 1) * 7, ForceMode2D.Impulse);
 
         anim.SetTrigger("isDamaged");
 
-        Invoke("OffDamaged", 1); // 3초 후 무적 해제
+<<<<<<< Updated upstream
+        Invoke("OffDamaged", 3);
+=======
+        Invoke("OffDamaged", 1); // 1초 후 무적 해제 (기존 3초에서 변경)
+>>>>>>> Stashed changes
     }
 
     void OffDamaged()
     {
-        gameObject.layer = LayerMask.NameToLayer("Player"); // 원래 레이어로 복귀 (Layer 7)
-        spriteRenderer.color = new Color(1, 1, 1, 1); // 원래 색으로
+        gameObject.layer = 7;
+        spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 
-    public void OnDeath() // HealthSystem에서 호출됨
+    public void OnDeath()
     {
         PlaySound("DEATH");
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);
         spriteRenderer.flipY = true;
-        capsuleCollider2D.enabled = false;
+        capsuleCollider2D.enabled = false; // 플레이어의 콜라이더 비활성화
         rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+<<<<<<< Updated upstream
+=======
         // 플레이어 움직임 정지
-        // rigid.linearVelocity = Vector2.zero; // 물리 시뮬레이션으로 점프 후 정지되므로 필요 없을 수 있음
+>>>>>>> Stashed changes
     }
 
     public void VelocityZero()

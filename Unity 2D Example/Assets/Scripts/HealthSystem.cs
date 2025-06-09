@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class HealthSystem : MonoBehaviour
 {
-    public static HealthSystem Instance; // 싱글톤 인스턴스
+    public static HealthSystem Instance;
 
     // 체력 바 UI (Image 컴포넌트)
     public Image[] healthHearts; // 하트 이미지 배열 (UI에 하트 개수만큼 연결)
@@ -17,7 +17,7 @@ public class HealthSystem : MonoBehaviour
     [Header("Game Over UI")]
     public GameObject gameOverPanel; // 게임 오버 시 활성화될 Panel
     public Button retryButton; // 재시작 버튼
-    public string firstStageSceneName = "Game"; // 첫 스테이지 씬 이름 (수정 필요!)
+    public string firstStageSceneName = "Game";
 
     // 플레이어 참조 (사망 시 플레이어 조작 중지 등을 위해)
     public PlayerMove playerMove;
@@ -27,7 +27,6 @@ public class HealthSystem : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            // DontDestroyOnLoad(gameObject); // 필요하다면 주석 해제 (플레이어가 씬 이동 시 파괴되지 않게)
         }
         else if (Instance != this)
         {
@@ -43,7 +42,6 @@ public class HealthSystem : MonoBehaviour
 
     void Start()
     {
-        // currentHealth = maxHealth; // Start에서 초기화하면 아이템 먹어도 리셋되므로, Awake에서 초기화하거나 씬 로드 시에만 초기화
         UpdateHealthUI();
 
         if (retryButton != null)
@@ -51,7 +49,6 @@ public class HealthSystem : MonoBehaviour
             retryButton.onClick.AddListener(RestartGame);
         }
 
-        // PlayerMove 컴포넌트 참조 (같은 오브젝트에 있다면)
         if (playerMove == null)
         {
             playerMove = GetComponent<PlayerMove>();
@@ -62,9 +59,7 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    //==============================================================
     // 체력 UI 업데이트 (하트 이미지)
-    //==============================================================
     public void UpdateHealthUI()
     {
         if (healthHearts == null || healthHearts.Length == 0)
@@ -77,17 +72,13 @@ public class HealthSystem : MonoBehaviour
         {
             if (healthHearts[i] != null)
             {
-                // 현재 체력보다 하트 인덱스가 작으면 활성화 (꽉 찬 하트), 아니면 비활성화 (빈 하트)
-                // 또는 투명도 조절: healthHearts[i].color = (i < currentHealth) ? Color.white : new Color(1, 1, 1, 0.3f);
                 healthHearts[i].color = (i < currentHealth) ? Color.white : new Color(1, 1, 1, 0.3f);
                 // healthHearts[i].enabled = (i < currentHealth); 단순히 켜고 끄는 방식
             }
         }
     }
 
-    /// <summary>
     /// 플레이어가 데미지를 입습니다 (하트 한 칸).
-    /// </summary>
     public void TakeDamage()
     {
         // 이미 죽었으면 더 이상 데미지 입지 않음
@@ -105,9 +96,7 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    /// <summary>
     /// 플레이어가 체력을 회복합니다 (하트 한 칸).
-    /// </summary>
     public void HealHealth()
     {
         // 이미 최대 체력이면 회복하지 않음
@@ -120,9 +109,7 @@ public class HealthSystem : MonoBehaviour
         Debug.Log($"체력 1 회복. 현재 체력: {currentHealth}");
     }
 
-    /// <summary>
-    /// 플레이어가 사망했을 때 호출됩니다.
-    /// </summary>
+    //플레이어가 사망했을 때 호출됩니다.
     private void PlayerDied()
     {
         Debug.Log("플레이어 사망!");
@@ -140,9 +127,7 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 게임을 재시작합니다 (첫 스테이지로 이동).
-    /// </summary>
+    // 게임을 재시작합니다 (첫 스테이지로 이동).
     public void RestartGame()
     {
         Debug.Log("게임 재시작!");
@@ -156,8 +141,7 @@ public class HealthSystem : MonoBehaviour
 
         // 플레이어 스탯 초기화 (씬 로드 전에)
         currentHealth = maxHealth; // 체력 초기화
-        // ManaSystem.Instance.manaPoint = ManaSystem.Instance.maxManaPoint; // 마나 시스템이 있다면 초기화
-        // PlayerInfoManager.Instance.UpdatePlayerInfoUI(); // 정보 UI 업데이트 (필요하다면)
+        // ManaSystem.Instance.manaPoint = ManaSystem.Instance.maxManaPoint; // 마나 시스템 초기화
 
         // 첫 스테이지 씬 로드
         SceneManager.LoadScene(firstStageSceneName);
