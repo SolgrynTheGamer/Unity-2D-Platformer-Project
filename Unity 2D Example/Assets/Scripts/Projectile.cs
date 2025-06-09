@@ -50,15 +50,10 @@ public class Projectile : MonoBehaviour
             EnemyMove enemy = collision.gameObject.GetComponent<EnemyMove>();
             if (enemy != null)
             {
-                int damageAmount = 30;
-                Vector2 hitPosition = transform.position;
-                enemy.OnDamaged(damageAmount, hitPosition);
+                enemy.OnDamaged();
             }
             Destroy(gameObject);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 }
