@@ -6,6 +6,10 @@ public class PlayerMove : MonoBehaviour
     public float maxSpeed;
     public float jumpPower;
     public float jumpCount;
+    public float jumpHeight = 5f;
+    public float moveSpeed = 8f;
+    public bool flippedLeft;
+    public bool facingRight;
     // public GameManager manager; // 더 이상 HealthDown을 호출하지 않으므로 제거
 
     Rigidbody2D rigid;
@@ -29,7 +33,7 @@ public class PlayerMove : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    void PlaySound(string action)
+    public void PlaySound(string action)
     {
         switch (action)
         {
@@ -67,30 +71,45 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && jumpCount < 2)
         {
+            rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, 0);
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
             PlaySound("JUMP");
             jumpCount++;
         }
 
-        if (Input.GetButtonUp("Horizontal"))
-        {
-            // 이동 중단 시 속도를 0으로 만듦
-            rigid.linearVelocity = new Vector2(rigid.linearVelocity.normalized.x * 0.0000001f, rigid.linearVelocity.y);
-        }
+        float h = Input.GetAxisRaw("Horizontal");
+        rigid.linearVelocity = new Vector2(h * moveSpeed, rigid.linearVelocity.y);
 
-        if (Input.GetButton("Horizontal"))
+        if (h < 0)
         {
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+            facingRight = false;
+            Flip(false);
+            anim.SetBool("isWalking", true);
         }
-
-        if (rigid.linearVelocity.normalized.x == 0)
+        else if (h > 0)
         {
-            anim.SetBool("isWalking", false);
+            facingRight = true;
+            Flip(true);
+            anim.SetBool("isWalking", true);
         }
         else
         {
-            anim.SetBool("isWalking", true);
+            anim.SetBool("isWalking", false);
+        }
+    }
+
+    void Flip(bool facingRight)
+    {
+        if(flippedLeft && facingRight)
+        {
+            transform.Rotate(0, -180, 0);
+            flippedLeft = false;
+        }
+        if(!flippedLeft && !facingRight)
+        {
+            transform.Rotate(0, -180, 0);
+            flippedLeft = true;
         }
     }
 
