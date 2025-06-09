@@ -10,7 +10,7 @@ public class EnemyMove : MonoBehaviour
 
     int nextMove;
     int hp;
-    public int maxHp = 100;
+    public int maxHp = 30;
 
     bool isInvincible;
     public float invincibleDur = 0.5f;
